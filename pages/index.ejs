@@ -34,14 +34,6 @@
 <body>
 
     <%- include('./partials/user-header') %>
-
-    <% if (error) { %>
-
-        <div class="alert alert-danger">
-            Something went wrong!
-        </div>
-
-    <% } %>
         
     <div class="h-100 p-5 m-auto">
         <h2 class="text-center m-4">Заявки с формы</h2>
@@ -58,7 +50,7 @@
                 <tbody>
                   <% applications.forEach(({name, phone, problem,createdAt }) => { %>
                     <tr>
-                        <td><%= createdAt.toLocaleDateString() %></td>
+                        <td><%= createdAt.toLocaleString() %></td>
                         <td><%= name %></td>
                         <td><%= phone %></td>
                         <td><%= problem %></td>
