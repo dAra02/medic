@@ -4,8 +4,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const { getZaivka } = require("./table.controller");
-
-const { addUser, loginUser } = require("./users.controller");
+const { loginUser } = require("./users.controller");
 const { addZaivka } = require("./zaivka.controller");
 const auth = require("./middlewares/auth");
 
@@ -72,33 +71,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/register", async (req, res) => {
-  res.render("register", {
-    title: "Express App",
-    error: undefined,
-  });
-});
-
-app.post("/register", async (req, res) => {
-  try {
-    await addUser(req.body.email, req.body.password);
-
-    res.redirect("/login");
-  } catch (e) {
-    if (e.code === 11000) {
-      res.render("register", {
-        title: "Express App",
-        error: "Такая почта уже существует",
-      });
-      return;
-    }
-    res.render("register", {
-      title: "Express App",
-      error: e.message,
-    });
-  }
-});
-
 app.get("/logout", (req, res) => {
   res.cookie("token", "", { httpOnly: true });
 
@@ -111,7 +83,6 @@ app.get("/", async (req, res) => {
   res.render("index", {
     title: "Express App",
     applications: await getZaivka(),
-    error: false,
   });
 });
 
